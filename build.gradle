@@ -1,15 +1,20 @@
 plugins {
     id 'java'
+
     id 'idea'
     id 'eclipse'
 
+    id 'com.github.hierynomus.license' version '0.11.0'
     id 'com.github.johnrengelman.shadow' version '1.2.1'
 }
+
+defaultTasks 'licenseFormat'
 
 group 'com.modwiz.sponge'
 version '0.1-SNAPSHOT'
 
 sourceCompatibility = 1.6
+targetCompatibility = 1.6
 
 repositories {
     mavenCentral()
@@ -39,6 +44,14 @@ shadowJar {
     classifier ''
 }
 assemble.dependsOn shadowJar
+
+license {
+    header file('HEADER')
+    strictCheck true
+    mapping {
+        java = 'SLASHSTAR_STYLE'
+    }
+}
 
 task wrapper(type: Wrapper) {
     gradleVersion = '2.4'
